@@ -1,32 +1,41 @@
 package com.greytoolco.githubrepos;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.greytoolco.githubrepos.adapters.ReposAdapter;
 import com.greytoolco.githubrepos.model.Repos;
-import com.greytoolco.githubrepos.model.response.UserResponse;
 import com.greytoolco.githubrepos.service.Service;
 import com.greytoolco.githubrepos.service.api.UserApi;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends Activity {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.avatar_url)
+    CircleImageView circleImageView;
+
+    @BindView(R.id.user_name)
+    AppCompatTextView userName;
+
     private String user;
+    private String avatar_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +44,12 @@ public class HomeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        user = getIntent().getStringExtra("User");
+        user = getIntent().getStringExtra("user");
+        avatar_url = getIntent().getStringExtra("avatar_url");
+
+        userName.setText(user);
+
+        Picasso.get().load(avatar_url).into(circleImageView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         new ThreadUser().execute();

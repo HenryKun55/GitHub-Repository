@@ -1,9 +1,5 @@
 package com.greytoolco.githubrepos.model.response;
 
-import com.greytoolco.githubrepos.model.Repos;
-
-import java.util.List;
-
 public class UserResponse extends ApiResponse{
 
     private String login;

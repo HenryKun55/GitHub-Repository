@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(UserResponse result) {
             if(null != result)
-                nextPage(result.getLogin());
+                nextPage(result.getLogin(), result.getAvatar_url());
             else
                 Toast.makeText(getApplicationContext(), "Usuário não encontrado", Toast.LENGTH_SHORT).show();
         }
@@ -87,9 +87,10 @@ public class MainActivity extends Activity {
         new ThreadUser().execute();
     }
 
-    private void nextPage(String user){
+    private void nextPage(String user, String avatar_url){
         Intent intent = new Intent(getBaseContext(), HomeActivity.class);
-        intent.putExtra("User", user);
+        intent.putExtra("user", user);
+        intent.putExtra("avatar_url", avatar_url);
         startActivity(intent);
     }
 }
